@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
+    <mat-form-field>
+      <input
+        matInput
+        name="{{ viewLabelProperties.email.formName }}"
+        ngModel
+        type="email"
+        placeholder="{{ viewLabelProperties.email.label }}"
+        #emailInput="ngModel"
+        required
+        email>
+      <mat-error *ngIf="emailInput.invalid">{{ validationMessages.email.required }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="password"
+        name="{{ viewLabelProperties.password.formName }}"
+        ngModel
+        #passwordInput="ngModel"
+        placeholder="{{ viewLabelProperties.password.label }}"
+        required>
+      <mat-error *ngIf="passwordInput.invalid">{{ validationMessages.password.required }}</mat-error>
+    </mat-form-field>
+    <button
+      *ngIf="!isLoading"
+      mat-raised-button
+      color="accent"
+      type="submit">{{ buttonProperties.login.label }}
+    </button>
+  </form>
+  <a
+    *ngIf="!isLoading"
+    routerLink="/auth/forgottenpass"
+    routerLinkActive="active">{{ buttonProperties.forgottenPassword.label }}
+  </a>
+</mat-card>

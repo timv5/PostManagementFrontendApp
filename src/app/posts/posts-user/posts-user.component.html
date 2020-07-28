@@ -1,0 +1,138 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<!--<mat-form-field>-->
+<!--  <input matInput-->
+<!--         placeholder="Choose a date"-->
+<!--         [satDatepicker]="picker"-->
+<!--         [formControl]="dateFilter">-->
+<!--  <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
+<!--  <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
+<!--</mat-form-field>-->
+<mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Filtering
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput class="form-field" [formControl]="titleFilter" placeholder="Title Filter" autocomplete="off">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select
+        class="form-field" [formControl]="categoryFilter" placeholder="Category Filter">
+        <mat-option>-</mat-option>
+        <mat-option *ngFor="let cat of categories" [value]="cat.name">
+          {{cat.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        class="form-field" [formControl]="postNumberFilter" placeholder="Post Number Filter">
+        <mat-option>-</mat-option>
+        <mat-option *ngFor="let postNum of postNumbers" [value]="postNum.number">
+          {{postNum.city + ' ' + postNum.number}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput class="form-field" [formControl]="addressFilter" placeholder="Address Filter" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="dp" [formControl]="dateFromFilter" placeholder="Date From Filter"
+             autocomplete="off">
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="dp1" [formControl]="dateToFilter" placeholder="Date To Filter"
+             autocomplete="off">
+      <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+      <mat-datepicker #dp1></mat-datepicker>
+    </mat-form-field>
+    <mat-action-row>
+      <button class="form-field" mat-button color="primary"
+              (click)="onReset()">POENOSTAVI
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+  <br>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>
+        Title
+      </th>
+
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>
+        Category
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.jobCategory.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="postNumber">
+      <th mat-header-cell *matHeaderCellDef>
+        Post Number
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.post_number.number}} {{element.post_number.city}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>
+        Address
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="dateFrom">
+      <th mat-header-cell *matHeaderCellDef>
+        Date From
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateControl.dateTimeFrom | date : "dd.MM.y"}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="dateTo">
+      <th mat-header-cell *matHeaderCellDef>
+        Date To
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateControl.dateTimeTo | date : "dd.MM.y"}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="userIsAuthenticated && userId === element.creator" mat-button color="primary"
+           [routerLink]="['/edit', element._id]">UREDI</a>
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="userIsAuthenticated && userId === element.creator" mat-button color="warn"
+                (click)="onDelete(element._id)">ZBRIŠI
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openDialog($event, row)"></tr>
+  </table>
+</mat-accordion>
+<mat-paginator [pageSizeOptions]="[2, 5, 10, 20]" showFirstLastButtons></mat-paginator>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0">Ni objavljenih objav</p>

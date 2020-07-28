@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSignup()" *ngIf="!isLoading">
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">{{ viewLabelProperties.imagePicker.label }}</button>
+      <input type="file" #filePicker (change)="onImagePicked($event)">
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+      <img [src]="imagePreview" [alt]="form.value.name">
+    </div>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.name.formName }}"
+        placeholder="{{ viewLabelProperties.name.label }}">
+      <mat-error *ngIf="form.get('name').invalid">{{ validationMessages.name.required }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.lastName.formName }}"
+        placeholder="{{ viewLabelProperties.lastName.label }}">
+      <mat-error *ngIf="form.get('lastName').invalid">{{ validationMessages.lastName.required }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.email.formName }}"
+        placeholder="{{ viewLabelProperties.email.label }}">
+      <mat-error *ngIf="form.get('email').invalid">{{ validationMessages.email.required }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="{{ viewLabelProperties.postNumber.label }}"
+        formControlName="{{ viewLabelProperties.postNumber.formName }}">
+        <mat-option *ngFor="let postNum of postNumbers" [value]="postNum.id">
+          {{postNum.city + ' ' + postNum.number}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.phone.formName }}"
+        placeholder="{{ viewLabelProperties.phone.label }}">
+      <mat-error *ngIf="form.get('phone').invalid">{{ validationMessages.phone.required }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+    <input
+      matInput
+      type="password"
+      name="password"
+      formControlName="{{ viewLabelProperties.password.formName }}"
+      placeholder="{{ viewLabelProperties.password.label }}"
+      required>
+    <mat-error *ngIf="form.get('password')">{{ validationMessages.password.required }}</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit">{{ buttonProperties.register.label }}
+    </button>
+  </form>
+</mat-card>

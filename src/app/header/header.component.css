@@ -1,0 +1,27 @@
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+ul {
+  display: flex;
+}
+
+.header-position {
+  position:absolute;
+  top:0px;
+  left:0px;
+  height:70px;
+  right:0px;
+  overflow:hidden;
+}

@@ -1,0 +1,36 @@
+<mat-toolbar class="header-position" color="primary">
+  <span>
+    <a routerLink="">PomocApp.si</a>
+  </span>
+  <span class="spacer">
+
+  </span>
+  <ul>
+    <li *ngIf="userIsAuthenticated">
+      <button mat-button [matMenuTriggerFor]="menu">{{ buttonProperties.headerMyDashboard.label }}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/myposts" routerLinkActive="mat-accent">{{ buttonProperties.headerMyPosts.label }}</button>
+        <button mat-menu-item routerLink="/" routerLinkActive="mat-accent">{{ buttonProperties.headerMyjobs.label }}</button>
+      </mat-menu>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <button mat-button [matMenuTriggerFor]="menu">{{ buttonProperties.profile.label }}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/user/{{userId}}" routerLinkActive="mat-accent">{{ viewLabelProperties.profile.label }}</button>
+        <button mat-menu-item routerLink="/auth/changepass/{{userId}}" routerLinkActive="mat-accent">{{ viewLabelProperties.changePassword.label }}</button>
+      </mat-menu>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="/create" routerLinkActive="mat-accent">{{ buttonProperties.newPost.label }}</a>
+    </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">{{ buttonProperties.login.label }}</a>
+    </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">{{ buttonProperties.register.label }}</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <button mat-button (click)="onLogout()">{{ buttonProperties.logout.label }}</button>
+    </li>
+  </ul>
+</mat-toolbar>

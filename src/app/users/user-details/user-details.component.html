@@ -1,0 +1,71 @@
+<mat-card>
+  <mat-card-content>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onSavePost()" *ngIf="!isLoading">
+      <!--<div class="user-image">-->
+        <!--<img [src]="user.imagePath" [alt]="user.name">-->
+      <!--</div>-->
+      <img mat-card-avatar [src]="user.imagePath" [alt]="user.imagePath">
+      <div>
+        <button *ngIf="isUser" mat-stroked-button type="button" (click)="filePicker.click()">Naloži fotografijo</button>
+        <input type="file" #filePicker (change)="onImagePicked($event)">
+      </div>
+      <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+        <img [src]="imagePreview" [alt]="form.value.name">
+      </div>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          placeholder="Ime">
+        <mat-error *ngIf="form.get('name').invalid">Prosim vnesite veljavno ime</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="lastName"
+          placeholder="Priimek">
+        <mat-error *ngIf="form.get('lastName').invalid">Prosim vnesite veljaven priimek</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="email"
+          placeholder="Email">
+        <mat-error *ngIf="form.get('email').invalid">Prosim vnesite veljave naslov</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select
+          placeholder="Pošta"
+          formControlName="postNumber">
+          <mat-option *ngFor="let postNum of postNumbers" [value]="postNum.id">
+            {{postNum.city + ' ' + postNum.number}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="phone"
+          placeholder="Telefon">
+        <mat-error *ngIf="form.get('phone').invalid">Prosim vnesite veljavno telefonsko številko</mat-error>
+      </mat-form-field>
+      <button
+        *ngIf="isUser"
+        mat-raised-button
+        color="primary"
+        type="submit">Save post
+      </button>
+      <button
+        *ngIf="isUser"
+        mat-button
+        color="warn"
+        (click)="onSendDeactivationEmail()">Deaktiviraj račun
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

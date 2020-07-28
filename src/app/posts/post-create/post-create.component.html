@@ -1,0 +1,89 @@
+<mat-card>
+  <mat-card-content flex ui-view>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSavePost()" *ngIf="!isLoading">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.title.formValue }}"
+        placeholder="{{ viewLabelProperties.title.label }}">
+      <mat-error *ngIf="form.get('title').invalid">{{ validationMessages.title.required }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.phone.formName }}"
+        placeholder="{{ viewLabelProperties.phone.label }}">
+      <mat-error *ngIf="form.get('phone').invalid">{{ validationMessages.phone.required}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.address.formValue}}"
+        placeholder="{{ viewLabelProperties.address.label}}">
+      <mat-error *ngIf="form.get('address').invalid">{{ validationMessages.address.required}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="{{ viewLabelProperties.postNumber.label}}"
+        formControlName="{{ viewLabelProperties.postNumber.formName}}">
+        <mat-option *ngFor="let postNum of postNumbers" [value]="postNum.id">
+          {{postNum.city + ' ' + postNum.number}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="{{ viewLabelProperties.category.label}}"
+        formControlName="{{ viewLabelProperties.category.formValue}}">
+        <mat-option *ngFor="let cat of categories" [value]="cat.id">
+          {{cat.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="pickerFrom"
+        formControlName="{{ viewLabelProperties.dateTimeFrom.formValue}}"
+        placeholder="{{ viewLabelProperties.dateTimeFrom.label}}">
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="pickerTo"
+        formControlName="{{ viewLabelProperties.dateTimeTo.formValue}}"
+        placeholder="{{ viewLabelProperties.dateTimeTo.label}}">
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        formControlName="{{ viewLabelProperties.price.formValue}}"
+        placeholder="{{ viewLabelProperties.price.label}}">
+      <mat-error *ngIf="form.get('price').invalid">{{ validationMessages.price.required }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        formControlName="{{ viewLabelProperties.content.formValue }}"
+        placeholder="{{ viewLabelProperties.content.label }}">
+      </textarea>
+      <mat-error *ngIf="form.get('content').invalid">{{ validationMessages.content.required }}</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit">{{ buttonProperties.savePost.label }}
+    </button>
+  </form>
+  </mat-card-content>
+</mat-card>

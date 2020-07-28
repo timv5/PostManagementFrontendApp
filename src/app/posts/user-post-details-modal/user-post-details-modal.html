@@ -1,0 +1,79 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-content class="mat-typography">
+  <mat-card>
+    <mat-card-header>
+      <img mat-card-avatar [src]="data.user.imagePath" [alt]="data.user.imagePath">
+      <mat-card-subtitle>Rate:<bar-rating [rate]=4.5 [max]="5" [readOnly]="true"></bar-rating>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <h3 matLine> Opis </h3>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Kategorija: </span>
+            <span> {{data.data.jobCategory.name}} </span>
+          </p>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Cena: </span>
+            <span> {{data.data.price}}</span>
+          </p>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Kratek opis: </span>
+            <span> {{data.data.content}}</span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <mat-list>
+        <h3 matLine> Pomoč iščem od/do: </h3>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Od: </span>
+            <span> {{data.data.dateControl.dateTimeFrom | date : "dd.MM.y"}} </span>
+          </p>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Do: </span>
+            <span> {{data.data.dateControl.dateTimeTo | date : "dd.MM.y"}}</span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <mat-list>
+        <h3 matLine> Lokacija </h3>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Naslov: </span>
+            <span> {{data.data.address}} </span>
+          </p>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Pošta: </span>
+            <span> {{data.data.post_number.number}} {{data.data.post_number.city}} </span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <mat-list>
+        <h3 matLine> Kontakt </h3>
+        <mat-list-item role="listitem">
+          <p matLine>
+            <span> Telefon: </span>
+            <span> {{data.data.phone}} </span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="primary">Zapri</button>
+</mat-dialog-actions>
